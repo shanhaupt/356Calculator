@@ -1,10 +1,15 @@
+package conversions;
 
 public class Binary {
 	
 	//data members
 	private String binaryStr;
 	
-	//constructor
+	//constructors
+	public Binary() {
+		
+	}
+	
 	public Binary(String binaryStr) {
 		this.setBinaryStr(binaryStr);
 	}
@@ -23,6 +28,15 @@ public class Binary {
 		}
 
 		return decimalVal;
+	}
+	
+	//convert binary to hex
+	public String binaryToHex() {
+		Decimal myDecimal = new Decimal();
+		long decimalRepresentation = binaryToDecimal();
+		myDecimal.setDecimalNum(decimalRepresentation);
+		String binaryAsHex = myDecimal.decimalToHex();
+		return binaryAsHex;
 	}
 
 	//accessors and mutators
