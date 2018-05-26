@@ -3,6 +3,7 @@ package testing;
 import conversions.Binary;
 import conversions.Decimal;
 import conversions.Hex;
+import exceptions.InvalidBinaryException;
 import exceptions.InvalidHexException;
 
 public class Conversions {
@@ -46,8 +47,13 @@ public class Conversions {
 		
 		/*
 		Binary binaryTesting = new Binary();
-		binaryTesting.setBinaryStr("10101000111000111001101011");
-		System.out.println(binaryTesting.binaryToHex());
+		binaryTesting.setBinaryStr("0000");
+		try {
+			System.out.println(binaryTesting.binaryToHex());
+		} catch (InvalidBinaryException e) {
+			e.printStackTrace();
+		}
 		*/
+				
 	}
 }

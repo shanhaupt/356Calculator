@@ -19,6 +19,9 @@ public class Decimal {
 		String hexString = "";
 		long result = decimalNum;
 		long remainder;
+		if(result == 0) {
+			hexString += '0';
+		}
 		
 		while(result>0) {
 			remainder = result%16;

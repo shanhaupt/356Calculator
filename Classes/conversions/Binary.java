@@ -1,5 +1,7 @@
 package conversions;
 
+import exceptions.InvalidBinaryException;
+
 public class Binary {
 	
 	//data members
@@ -15,27 +17,37 @@ public class Binary {
 	}
 
 	//convert binary to decimal
-	public long binaryToDecimal(){
+	public long binaryToDecimal() throws InvalidBinaryException{
 		long decimalVal = 0;
 		int strLength = binaryStr.length();
-
-		/*loop through the binary string and add the corresponding
-		decimal values to decimalVal*/
-		for (int i = 0; i < binaryStr.length(); i++) {
-			char c = binaryStr.charAt(i);
-			int currDigit = Character.getNumericValue(c);
-			decimalVal += (Math.pow(2, strLength-i-1)) * currDigit;
+		try {
+			int n = Integer.parseInt(binaryStr, 2);
+			/*loop through the binary string and add the corresponding
+			decimal values to decimalVal*/
+			for (int i = 0; i < binaryStr.length(); i++) {
+				char c = binaryStr.charAt(i);
+				int currDigit = Character.getNumericValue(c);
+				decimalVal += (Math.pow(2, strLength-i-1)) * currDigit;
+			}
 		}
-
+		catch(NumberFormatException nfe) {
+			throw new InvalidBinaryException("Invalid binary number");
+		}
 		return decimalVal;
 	}
 	
 	//convert binary to hex
-	public String binaryToHex() {
-		Decimal myDecimal = new Decimal();
-		long decimalRepresentation = binaryToDecimal();
-		myDecimal.setDecimalNum(decimalRepresentation);
-		String binaryAsHex = myDecimal.decimalToHex();
+	public String binaryToHex() throws InvalidBinaryException{
+		String binaryAsHex = "";
+		try {
+			Decimal myDecimal = new Decimal();
+			long decimalRepresentation = binaryToDecimal();
+			myDecimal.setDecimalNum(decimalRepresentation);
+			binaryAsHex = myDecimal.decimalToHex();
+		}
+		catch(InvalidBinaryException ibe) {
+			System.out.println(ibe.getMessage());
+		}
 		return binaryAsHex;
 	}
 
