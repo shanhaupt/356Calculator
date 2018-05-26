@@ -45,15 +45,15 @@ public class Conversions {
 		
 		//testing of binary to hex
 		
-		/*
+		
 		Binary binaryTesting = new Binary();
-		binaryTesting.setBinaryStr("0000");
+		binaryTesting.setBinaryStr("100011101");
 		try {
 			System.out.println(binaryTesting.binaryToHex());
 		} catch (InvalidBinaryException e) {
 			e.printStackTrace();
 		}
-		*/
+		
 				
 	}
 }
