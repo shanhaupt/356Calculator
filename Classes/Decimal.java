@@ -8,7 +8,7 @@ public class Decimal {
 		/*divide the decimal value by 2, append the remainder to the binary string
 		as long as the decimal value is greater than 0 */
 		while(decimalVal > 0) {
-			long remainder = decimalVal - ((long)Math.floor(decimalVal/2)*2);
+			long remainder = decimalVal - ((decimalVal/2)*2);
 			binaryStr += remainder;
 			decimalVal = decimalVal/2;
 		}
