@@ -1,5 +1,7 @@
 package conversions;
 
+import exceptions.InvalidBinaryException;
+
 public class Decimal {
 	
 	//data members
@@ -55,7 +57,7 @@ public class Decimal {
 		
 	}
 
-	//convert decimal to binary
+	//convert unsigned decimal to binary
 	public String decimalToBinary() {
 		String binaryStr = "";
 		long tempVal = decimalNum;
@@ -70,6 +72,85 @@ public class Decimal {
 		binaryStr = reverseString(binaryStr);
 		
 		return binaryStr;
+	}
+	
+	//convert signed decimal to binary
+	public String signedDecimalToBinary() {
+		String result = "";
+		//if the decimal value inputed is positive
+		if(decimalNum >= 0) {
+			return this.decimalToBinary();
+		}
+		
+		//if the decimal value inputed is negative
+		else{
+			decimalNum = Math.abs(decimalNum);
+			result = this.decimalToBinary();
+			StringBuilder modifiedResult = new StringBuilder(result);
+			
+			//two's complement
+			for(int i = 0; i < result.length(); i++) {
+				if(result.charAt(i) == '0') {
+					modifiedResult.setCharAt(i, '1');
+				}
+				else if(result.charAt(i) == '1') {
+					modifiedResult.setCharAt(i, '0');
+				}
+			}
+			result = modifiedResult.toString();
+			
+			String signedBinary = "";
+			String carryOver = "0";
+			
+			//add 1 to the flipped string
+			String currNum = result.substring(result.length() -1);
+			int currNumInt = Integer.parseInt(currNum);
+			int sum = currNumInt + 1;
+			if(sum == 1) {
+				signedBinary += sum;
+			}
+			else if(sum == 2) {
+				signedBinary += '0';
+				carryOver = "1";
+			}
+			int carryOverInt = 0;
+			
+			//loop through the binary string summing it up 
+			for(int j = result.length() - 2; j > 0; j--) {
+				currNum = result.substring(j, j+1);
+				currNumInt = Integer.parseInt(currNum);
+				carryOverInt = Integer.parseInt(carryOver);
+				sum = currNumInt + carryOverInt;
+				if(sum == 1) {
+					signedBinary += sum;
+					carryOver = "0";
+				}
+				else if(sum == 2) {
+					signedBinary += '0';
+					carryOver = "1";
+				}
+			}
+			
+			//reverse the string as it was built in reverse order
+			signedBinary = reverseString(signedBinary);
+			
+			//if decimalNum was initially negative, set it back to negative
+			decimalNum = decimalNum*-1;
+			
+			return signedBinary;
+		}
+	}
+	
+	//convert signed decimal to hex
+	public String signedDecimalToHex() {
+		Binary binary = new Binary(this.signedDecimalToBinary());
+		String hex = "";
+		try {
+			hex += binary.binaryToHex();
+		} catch (InvalidBinaryException e) {
+			e.printStackTrace();
+		}
+		return hex;
 	}
 	
 	//string reverse

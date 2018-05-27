@@ -1,5 +1,6 @@
 package conversions;
 
+import exceptions.InvalidBinaryException;
 import exceptions.InvalidHexException;
 
 public class Hex {
@@ -45,6 +46,35 @@ public class Hex {
 		return hToB.decimalToBinary();
 	}
 	
+	//convert signed hex to binary
+	public String signedHexToBinary() throws InvalidHexException{
+		String hex = "";
+		try{
+			hex += hexToBinary();
+		} 
+		catch (InvalidHexException e){
+			e.printStackTrace();
+		}
+		return hex;
+	}
+	
+	//convert signed hex to decimal
+	public long signedHexToDecimal() throws InvalidBinaryException {
+		String binary = "";
+		try {
+			binary += signedHexToBinary();
+		} catch (InvalidHexException e1) {
+			e1.printStackTrace();
+		}
+		Binary bin = new Binary(binary);
+		Long decimal = 0L;
+		try {
+			decimal = bin.signedBinaryToDecimal();
+		} catch (InvalidBinaryException e) {
+			e.printStackTrace();
+		}
+		return decimal;
+	}
 	
 	//Get Decimal Equivalent of Hex Number
 	//Throws InvalidHexException if char is not a valid
