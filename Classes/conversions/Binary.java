@@ -3,10 +3,10 @@ package conversions;
 import exceptions.InvalidBinaryException;
 
 public class Binary {
-	
+
 	//data members
 	private String binaryStr;
-	
+
 	//constructors
 	public Binary() {
 		
