@@ -1,7 +1,9 @@
 package testing;
 
+import exceptions.InvalidBinaryException;
 import operatons.Addition;
 import operatons.AdditionReturn;
+import operatons.Subtraction;
 
 public class Operations {
 	public static void main(String [] args) {
@@ -18,14 +20,22 @@ public class Operations {
 		 * 		Case8:	Decimal 	Binary
 		 * 		Case9:	Decimal 	Hex
 		 */
-		Addition myAddition = new Addition();
-		myAddition.setFirstNum("11101");
-		myAddition.setSecondNum("1101");
-		myAddition.setCaseNum(1);
+		Addition myAddition = new Addition("110101111101", "1110111111", false);
+		
 		AdditionReturn myReturnValues = myAddition.addMe();
 		System.out.println(myReturnValues.getBinaryReturn().getBinaryStr());
 		System.out.println(myReturnValues.getHexReturn().getHexNumber());
 		System.out.println(myReturnValues.getDecimalReturn().getDecimalNum());
+		
+		Subtraction mySubtractions = new Subtraction("11011", "0011", false);
+		String returnVals = null;
+		try {
+			returnVals = mySubtractions.subtractMe();
+		} catch (InvalidBinaryException e) {
+			e.printStackTrace();
+		}
+		System.out.println(returnVals);
+		
 	}
 }
 

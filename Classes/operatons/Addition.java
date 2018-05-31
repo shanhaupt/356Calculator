@@ -9,9 +9,9 @@ import exceptions.InvalidHexException;
 public class Addition {
 	
 	//data members
-	private String firstNum;
-	private String secondNum;
-	private int caseNum;
+	private String binaryNum1;
+	private String binaryNum2;
+	private String subtractionProduct;
 	private boolean signed;
 	
 	/*9 Cases:
@@ -34,206 +34,24 @@ public class Addition {
 		
 	}
 
-	public Addition(String firstNum, String secondNum, int caseNum, boolean signed) {
-		this.firstNum = firstNum;
-		this.secondNum = secondNum;
-		this.caseNum = caseNum;
+	public Addition(String firstNum, String secondNum, boolean signed) {
+		this.binaryNum1 = firstNum;
+		this.binaryNum2 = secondNum;
 		this.signed = signed;
+		subtractionProduct = "0";
 	}
 	
 	//perform addition
 	public AdditionReturn addMe() {
-
-		String binaryNum1 = "";
-		String binaryNum2 = "";
-		Binary myBinary = new Binary();
-		Hex myHex = new Hex();
-		Hex myHex2 = new Hex();
-		Decimal myDecimal = new Decimal();
-		Decimal myDecimal2 = new Decimal();
+		
 		AdditionReturn myReturn = new AdditionReturn();
-		
-		//Case1:	Binary	 	Binary 
-		if (caseNum == 1) {
-			binaryNum1 = firstNum;
-			binaryNum2 = secondNum;		
-		}
-		
-		//Case2:	Hex	 		Hex
-		else if(caseNum == 2) {
-			//unsigned addition
-			if(signed == false) {
-				myHex = new Hex(firstNum);
-				try {
-					binaryNum1 += myHex.hexToBinary();
-				} catch (InvalidHexException e1) {
-					e1.printStackTrace();
-				}
-				myHex2 = new Hex(secondNum);
-				try {
-					binaryNum2 += myHex2.hexToBinary();
-				} catch (InvalidHexException e) {
-					e.printStackTrace();
-				}
-			}
-			//signed addition
-			else {
-				myHex = new Hex(firstNum);
-				try {
-					binaryNum1 += myHex.signedHexToBinary();
-				} catch (InvalidHexException e1) {
-					e1.printStackTrace();
-				}
-				myHex2 = new Hex(secondNum);
-				try {
-					binaryNum2 += myHex2.signedHexToBinary();
-				} catch (InvalidHexException e) {
-					e.printStackTrace();
-				}
-			}
-			
-		}
-		//Case3:	Decimal 	Decimal
-		else if(caseNum == 3) {
-			myDecimal = new Decimal(stringToLong(firstNum));
-			myDecimal2 = new Decimal(stringToLong(secondNum));
-			//unsigned addition
-			if(signed == false) {
-				binaryNum1 += myDecimal.decimalToBinary();
-				binaryNum2 += myDecimal2.decimalToBinary();
-			}
-			//signed addition
-			else {
-				binaryNum1 += myDecimal.signedDecimalToBinary();
-				binaryNum2 += myDecimal2.signedDecimalToBinary();
-			}
-		}
-		//Case4:	Binary	 	Hex
-		else if(caseNum == 4) {
-			binaryNum1 += firstNum;
-			//unsigned addition
-			if(signed == false) {
-				myHex = new Hex(secondNum);
-				try {
-					binaryNum2 += myHex.hexToBinary();
-				} catch (InvalidHexException e1) {
-					e1.printStackTrace();
-				}
-			}
-			//signed addition
-			else {
-				myHex = new Hex(secondNum);
-				try {
-					binaryNum2 += myHex.signedHexToBinary();
-				} catch (InvalidHexException e1) {
-					e1.printStackTrace();
-				}
-			}
-		
-		}
-		//Case5:	Binary	 	Decimal
-		else if(caseNum == 5) {
-			binaryNum1 += firstNum;
-			myDecimal = new Decimal(stringToLong(secondNum));
-			//unsigned addition
-			if(signed == false) {
-				binaryNum2 += myDecimal.decimalToBinary();
-			}
-			//signed addition
-			else {
-				binaryNum2 += myDecimal.signedDecimalToBinary();
-			}
-	
-		}
-		//Case6:	Hex 		Binary
-		else if(caseNum == 6) {
-			binaryNum2 += secondNum;
-			//unsigned addition
-			if(signed == false) {
-				myHex = new Hex(firstNum);
-				try {
-					binaryNum1 += myHex.hexToBinary();
-				} catch (InvalidHexException e1) {
-					e1.printStackTrace();
-				}
-			}
-			//signed addition
-			else {
-				myHex = new Hex(firstNum);
-				try {
-					binaryNum1 += myHex.signedHexToBinary();
-				} catch (InvalidHexException e1) {
-					e1.printStackTrace();
-				}
-			}
-	
-		}
-		//Case7:	Hex 		Decimal
-		else if(caseNum == 7) {
-			myHex.setHexNumber(firstNum);
-			myDecimal.setDecimalNum(stringToLong(secondNum));
-			//unsigned addition
-			if(signed==false) {
-				try {
-					binaryNum1 += myHex.hexToBinary();
-				} catch (InvalidHexException e) {
-					e.printStackTrace();
-				}
-				binaryNum2 += myDecimal.decimalToBinary();
-			}
-			//signed addition
-			else {
-				try {
-					binaryNum1 += myHex.signedHexToBinary();
-				} catch (InvalidHexException e) {
-					e.printStackTrace();
-				}
-				binaryNum2 += myDecimal.signedDecimalToBinary();
-			}
-	
-		}
-		//Case8:	Decimal 	Binary
-		else if(caseNum == 8) {
-			binaryNum2 += secondNum;
-			myDecimal.setDecimalNum(stringToLong(firstNum));
-			//unsigned addition
-			if(signed == false) {
-				binaryNum1 += myDecimal.decimalToBinary();
-			}
-			//signed addition
-			else {
-				binaryNum1 += myDecimal.signedDecimalToBinary();
-			}
-		}
-		//Case9:	Decimal 	Hex
-		else if (caseNum == 9) {
-			myDecimal.setDecimalNum(stringToLong(firstNum));
-			myHex.setHexNumber(secondNum);
-			//unsigned addition
-			if(signed == false) {
-				binaryNum1 += myDecimal.decimalToBinary();
-				try {
-					binaryNum2 += myHex.hexToBinary();
-				} catch (InvalidHexException e) {
-					e.printStackTrace();
-				}
-			}
-			//signed addition
-			else {
-				binaryNum1 += myDecimal.signedDecimalToBinary();
-				try {
-					binaryNum2 += myHex.signedHexToBinary();
-				} catch (InvalidHexException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-			
+
 		//get sum from the addHelp function
 		String sum = addHelp(binaryNum1, binaryNum2);
-		System.out.println("binaryNum1: "+binaryNum1);
-		System.out.println("binaryNum2: "+binaryNum2);
-		System.out.println("SUM@LINE 228: "+sum);
+		
+		//System.out.println("binaryNum1: "+binaryNum1);
+		//System.out.println("binaryNum2: "+binaryNum2);
+		//System.out.println("SUM@LINE 51: "+sum);
 		
 		//convert the binary value of the sum to decimal and hex, create an AdditionReturn object with these 
 		//values and return that object
@@ -268,11 +86,13 @@ public class Addition {
 	
 	//add help function
 	private String addHelp(String binary1, String binary2) {
-		System.out.println("binaryNum1_HELPER: "+binary1);
-		System.out.println("binaryNum2_HELPER: "+binary2);
+		//System.out.println("binaryNum1_HELPER: "+binary1);
+		//System.out.println("binaryNum2_HELPER: "+binary2);
 		//find max length of both strings
 		int lenStr1 = binary1.length();
 		int lenStr2 = binary2.length();
+		//System.out.println("Addition Line 91 -> I1 Len: "+lenStr1);
+		//System.out.println("Addition Line 92 -> I2 Len: "+lenStr2);
 		//set longer strings length as totLen
 		int longerLen = 0;
 		int shorterLen = 0;
@@ -286,7 +106,9 @@ public class Addition {
 		//sum up the two binary strings
 		char carryOver='0';
 		String product= "";
-		for(int i=shorterLen-1; i>=0; i--){
+		binary1 = reverseString(binary1);
+		binary2 = reverseString(binary2);
+		for(int i=0; i<shorterLen; i++){
 			//case1 1+1
 			if ((binary1.charAt(i)=='1')&&(binary2.charAt(i)=='1')) {
 				//no carryover
@@ -334,7 +156,7 @@ public class Addition {
 		//if first string is longer than second string
 		if(lenStr1>lenStr2) {
 			int charsRemaining = lenStr1-lenStr2;
-			for(int i=charsRemaining-1; i>=0; i--) {
+			for(int i=lenStr2; i < lenStr1; i++) {
 				if(binary1.charAt(i) == '1') {
 					if(carryOver == '1') {
 						carryOver = '1';
@@ -361,7 +183,7 @@ public class Addition {
 		//if second string is longer than first string
 		else {
 			int charsRemaining = lenStr2-lenStr1;
-			for(int i=charsRemaining-1; i>=0; i--) {
+			for(int i=lenStr1; i < lenStr2; i++) {
 				if(binary2.charAt(i) == '1') {
 					if(carryOver == '1') {
 						carryOver = '1';
@@ -382,14 +204,21 @@ public class Addition {
 						carryOver = '0';
 					}
 				}
-				
 			}
 		}
 		
-		//reverse the binary sum and return it
+		subtractionProduct = reverseString(product);
+		
+		//add in carryover in case where carryover = 1
+		if(carryOver == '1') {
+			product+='1';
+		}
+		
+		//return the binary sum
 		product = reverseString(product);
 		return product;
 	}
+	
 	
 	//string reverse
 	public String reverseString(String input) {
@@ -400,35 +229,37 @@ public class Addition {
 		return input;
 	}
 	
-	private long stringToLong(String num) {
-		long myNum = new Long(num);
-		return myNum;
-	}
+	
 	
 	//accessors and mutators
 	public String getFirstNum() {
-		return firstNum;
+		return binaryNum1;
 	}
 
 	public void setFirstNum(String firstNum) {
-		this.firstNum = firstNum;
+		this.binaryNum1 = firstNum;
 	}
 
 	public String getSecondNum() {
-		return secondNum;
+		return binaryNum2;
 	}
 
 	public void setSecondNum(String secondNum) {
-		this.secondNum = secondNum;
+		this.binaryNum2 = secondNum;
+	}
+	
+	public boolean getSigned() {
+		return signed;
+	}
+	
+	public void setSigned(boolean signed) {
+		this.signed = signed;
 	}
 
-	public int getCaseNum() {
-		return caseNum;
+	public String getSubtractionProduct() {
+		return subtractionProduct;
 	}
 
-	public void setCaseNum(int caseNum) {
-		this.caseNum = caseNum;
-	}
 	
 	
 }
