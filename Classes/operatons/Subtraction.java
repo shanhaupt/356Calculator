@@ -18,6 +18,46 @@ public class Subtraction {
 		this.firstNum = firstNum;
 		this.secondNum = secondNum;
 		this.signed = signed;
+		if(signed == false) {
+			unsignedBinaryHelper();
+		}
+	}
+	
+	public void unsignedBinaryHelper() {
+		//first number longer than first
+		if (firstNum.length() > secondNum.length()) {
+			//prepend a 0 to beginning of firstNum if MSB is one to maintain correct sign 
+			if (firstNum.charAt(0) == '1') {
+				firstNum = '0'+firstNum;
+			}
+			//pad secondNum with 0's to keep positive
+			int overlap = firstNum.length() - secondNum.length();
+			for  (int i=0; i<overlap; i++) {
+				secondNum = '0'+secondNum;
+			}
+		}
+		//second number longer than first
+		else if (secondNum.length()>firstNum.length()){
+			//prepend a 0 to beginning of secondNum if MSB is one to maintain correct sign 
+			if (secondNum.charAt(0) == '1') {
+				secondNum = '0'+secondNum;
+			}
+			//pad firstNum with 0's to keep positive
+			int overlap = secondNum.length() - firstNum.length();
+			for (int i=0; i<overlap; i++) {
+				firstNum = '0'+firstNum;
+			}
+		}
+		//firstNum and secondNum are of same length
+		else {
+			//prepend a 0 to beginning of first/secondNum if MSB is one to maintain correct sign 
+			if((firstNum.charAt(0) == '1')||(secondNum.charAt(0) == '1')) {
+				firstNum = '0'+firstNum;
+				secondNum = '0'+secondNum;
+			}
+		}
+		System.out.println("Number one after cleaning: "+firstNum);
+		System.out.println("Number two after cleaning: "+secondNum);
 	}
 	
 	//subtraction method (perform two's complement on the subtrahend)

@@ -17,7 +17,7 @@ public class Operations {
 		 * 		Case5:	Binary	 	Decial
 		 * 		Case6:	Hex 		Binary
 		 * 		Case7:	Hex 		Decimal
-		 * 		Case8:	Decimal 	Binary
+		 * 		Case8:	Decimal 	Binaryp---
 		 * 		Case9:	Decimal 	Hex
 		 */
 		Addition myAddition = new Addition("110101111101", "1110111111", false);
