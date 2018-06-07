@@ -1,6 +1,6 @@
 package testing;
 
-import operatons.InputCases;
+import controller.DataRepresentationInputCases;
 
 public class InputCasesTesting {
 	public static void main(String [] args) {
@@ -22,7 +22,7 @@ public class InputCasesTesting {
 		String input2 = "AF";
 		int caseNum = 9;
 		boolean signed = false;
-		InputCases myInputCases = new InputCases(input1, input2, caseNum, signed);
+		DataRepresentationInputCases myInputCases = new DataRepresentationInputCases(input1, input2, caseNum, signed);
 		System.out.println("Input1 As Binary: "+myInputCases.getBinaryString1());
 		System.out.println("Input2 As Binary: "+myInputCases.getBinaryString2());
 		

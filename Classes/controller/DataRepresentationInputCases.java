@@ -1,11 +1,11 @@
-package operatons;
+package controller;
 
 import conversions.Binary;
 import conversions.Decimal;
 import conversions.Hex;
 import exceptions.InvalidHexException;
 
-public class InputCases {
+public class DataRepresentationInputCases {
 	
 	private String firstNum;
 	private String secondNum;
@@ -15,7 +15,7 @@ public class InputCases {
 	private boolean signed;
 	
 	//Constructors
-	public InputCases(String firstNum, String secondNum, int caseNum, boolean signed) {
+	public DataRepresentationInputCases(String firstNum, String secondNum, int caseNum, boolean signed) {
 		this.firstNum = firstNum;
 		this.secondNum = secondNum;
 		this.caseNum = caseNum;
