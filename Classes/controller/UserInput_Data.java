@@ -3,6 +3,7 @@ package controller;
 public class UserInput_Data {
 	private String input;
 	private String inputRepresentation;
+	private int inputLength = -1;
 	
 	private boolean signed;
 	
@@ -12,7 +13,9 @@ public class UserInput_Data {
 		this.input = input;
 		this.inputRepresentation = inputRepresentation;
 		this.signed = signed;
+		this.inputLength = input.length();
 	}
+	
 	
 	public String getUserInput() {
 		return input;
@@ -20,6 +23,10 @@ public class UserInput_Data {
 	
 	public String getInputRepresentation() {
 		return inputRepresentation;
+	}
+	
+	public int getInputLength() {
+		return inputLength;
 	}
 	
 	public boolean getSigned() {
