@@ -2,9 +2,11 @@ package controller;
 
 import java.util.Arrays;
 
+import conversions.Decimal;
+
 public class UserInput {
 	
-	UserInput_Data [] inputData = new UserInput_Data[2];
+	private UserInput_Data [] inputData = new UserInput_Data[2];
 	
 	//Metadata (Consistent for all input types)
 		/*Note: This data is also present in UserInput_Data, but these values shoud be
@@ -55,30 +57,33 @@ public class UserInput {
 	
 	public void inputsToBinary(int numInputs) {
 		for(int i=0; i<numInputs; i++) {
+			String tempUserInput = inputData[i].getUserInput();
 			
 			//Input Data is of Type Char (1 Byte, 8 bits)
 			if(inputDataSize == 8) {
-				char [] charBinaryString = new char[8];
 				//User Input 1 Represented as a Binary Number
 				if(inputData[i].getInputRepresentation() == "bin") {
-					
-					//Input(s) are signed number(s)
-					if (signed) {
-						
+					//function padBinaryString_to_dataType handles signed/unsigned
+					tempUserInput = padBinaryString_to_dataType(tempUserInput, inputDataSize);
+					inputData[i].setInputAsBinary(tempUserInput);
+				}
+				//User Input 1 Represented as a Decimal Number
+				else if(inputData[i].getInputRepresentation() == "dec") {
+					int decimalInput = Integer.parseInt(tempUserInput);
+					Decimal myDecimal = new Decimal(decimalInput);	
+					if(signed) {
+						tempUserInput = myDecimal.signedDecimalToBinary();
 					}
-					//Input(s) are unsigned number(s)
 					else {
-						String tempUserInput = inputData[i].getUserInput();
-						tempUserInput = zeroPadUnsignedBinaryString(tempUserInput, inputDataSize);
-						System.out.println("tempUserInput @ Line 73: "+tempUserInput);
+						tempUserInput = myDecimal.decimalToBinary();
 					}
+					tempUserInput = padBinaryString_to_dataType(tempUserInput, inputDataSize);
+					inputData[i].setInputAsBinary(tempUserInput);
+					
 				}
 			}
 			
-			//User Input 1 Represented as a Decimal Number
-			else if(inputData[i].getInputRepresentation() == "dec") {
-					
-			}
+			
 			
 			//User Input 1 Represented as a Hex Number
 			else if(inputData[i].getInputRepresentation() == "hex") {
@@ -109,13 +114,72 @@ public class UserInput {
 		}
 	}
 	
-	public String zeroPadUnsignedBinaryString(String input, int dataType) {
+	public String padBinaryString_to_dataType(String input, int dataType) {
 		
-		char[] zeroMask = new char[dataType];
-		String zeroMaskString;
+		if((input.length()<dataType+1)&&(input.length()>0)){
+			char[] zeroMask = new char[dataType];
+			Arrays.fill(zeroMask, '0');
+			String zeroMaskString = new String(zeroMask);
+			
+			char[]	onesMask = new char[dataType];
+			Arrays.fill(onesMask, '1');
+			String onesMaskString = new String(onesMask);
+			
+			//check to see if binary string is 0
+			int zeroChecker = Integer.parseInt(input);
+			if(zeroChecker==0) {
+				input = zeroMaskString;
+			}
+			//Binary String is not 0
+			else {
+				if(signed) {
+					//MSB is 0
+					if(input.charAt(0) == '0') {
+						input = (zeroMaskString+input).substring(input.length());
+					}
+					//MSB is 1
+					else {
+						input = (onesMaskString+input).substring(input.length());
+					}
+				}
+				else {
+					//find first instance of a 1 till end of string to pad with 0's
+					int firstOne = input.indexOf('1');
+					//input string from first occurance of a '1' 
+					input = input.substring(firstOne, input.length());
+					//pad user input with 0's to fill 8 bits (i.e. char)
+					input = (zeroMaskString+input).substring(input.length());
+				}
+			}
+		}
+		else {
+			//TODO throw an exception here
+			System.out.println("Need to throw exception here!");
+		}
+			
+		/*
 		if(signed) {
-			Arrays.fill(zeroMask, '1');
-			zeroMaskString = new String(zeroMask);
+			
+			if((input.length()<dataType+1)&&(input.length()>0)){
+				
+				
+				
+				//check to see if binary string is 0
+				int zeroChecker = Integer.parseInt(input);
+				System.out.println(zeroChecker);
+				if(zeroChecker==0) {
+					input = zeroMaskString;
+				}
+				else {
+					input = (zeroMaskString+input).substring(input.length());
+				}
+				
+			}
+			//throw an exception
+			else {
+				//TODO throw an exception here
+				System.out.println("Need to throw exception here!");
+			}
 			//case where user inputs 0xxxx
 			//case where user inputs 1xxxx
 		}
@@ -146,21 +210,20 @@ public class UserInput {
 				System.out.println("Need to throw exception here!");
 			}
 		}
-		
-		
-		
-		
-		
-		
+		*/
 		
 		return input;
 	}
 	
-	public void input1_toBinary() {
-		
+	public String getUserInput1() {
+		return inputData[0].getUserInput();
 	}
 	
-	public void input2_toBinary() {
+	public String input1_toPaddedBinary() {
+		return inputData[0].getInputAsBinary();
+	}
+	
+	public void input2_toPaddedBinary() {
 		
 	}
 	

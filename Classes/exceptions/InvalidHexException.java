@@ -5,3 +5,4 @@ public class InvalidHexException extends Exception{
 		super(message);
 	}
 }
+		
