@@ -40,7 +40,7 @@ public class UserInputTesting {
 		String inputString2 = "8";
 		String inputString2_representation = "dec";
 		int inputString2_dataType = 8;
-		boolean inputString2_signed = true;
+		boolean inputString2_signed = false;
 		
 		UserInput myUserInput2 = new UserInput(inputString2, inputString2_representation,
 				inputString2_dataType, inputString2_signed);

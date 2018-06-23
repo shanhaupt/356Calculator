@@ -70,14 +70,16 @@ public class UserInput {
 				//User Input 1 Represented as a Decimal Number
 				else if(inputData[i].getInputRepresentation() == "dec") {
 					int decimalInput = Integer.parseInt(tempUserInput);
-					Decimal myDecimal = new Decimal(decimalInput);	
+					Decimal myDecimal = new Decimal(decimalInput);
+					
+					tempUserInput = padBinaryString_to_dataType(tempUserInput, inputDataSize);
 					if(signed) {
 						tempUserInput = myDecimal.signedDecimalToBinary();
 					}
 					else {
 						tempUserInput = myDecimal.decimalToBinary();
 					}
-					tempUserInput = padBinaryString_to_dataType(tempUserInput, inputDataSize);
+					
 					inputData[i].setInputAsBinary(tempUserInput);
 					
 				}

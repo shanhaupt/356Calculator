@@ -78,6 +78,7 @@ public class Decimal {
 	public String signedDecimalToBinary() {
 		String result = "";
 		//if the decimal value inputed is positive
+		System.out.println("signedDecimalToBinary is convewrting: "+decimalNum);
 		if(decimalNum >= 0) {
 			return this.decimalToBinary();
 		}
@@ -85,7 +86,9 @@ public class Decimal {
 		//if the decimal value inputed is negative
 		else{
 			decimalNum = Math.abs(decimalNum);
+			System.out.println("AbsVal Decimal Number is: "+decimalNum);
 			result = this.decimalToBinary();
+			System.out.println("AbsVal Decimal Number to Binary: "+result);
 			StringBuilder modifiedResult = new StringBuilder(result);
 			
 			//two's complement
@@ -98,6 +101,7 @@ public class Decimal {
 				}
 			}
 			result = modifiedResult.toString();
+			System.out.println("Make 1's 0's and 0's 1's: "+result);
 			
 			String signedBinary = "";
 			String carryOver = "0";
