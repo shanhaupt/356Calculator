@@ -5,7 +5,7 @@ import conversions.Decimal;
 public class Conversions_Decimal {
 	public static void main(String [] args) {
 	
-	long input = -10L;	
+	long input = -40L;	
 	
 	Decimal myDecimal = new Decimal();
 	myDecimal.setDecimalNum(input);

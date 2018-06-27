@@ -1,4 +1,4 @@
-package conversions;
+package conversions; 
 
 import exceptions.InvalidBinaryException;
 
@@ -76,72 +76,49 @@ public class Decimal {
 	
 	//convert signed decimal to binary
 	public String signedDecimalToBinary() {
-		String result = "";
-		//if the decimal value inputed is positive
-		System.out.println("signedDecimalToBinary is convewrting: "+decimalNum);
-		if(decimalNum >= 0) {
-			return this.decimalToBinary();
-		}
+		long absval = Math.abs(decimalNum);
 		
-		//if the decimal value inputed is negative
-		else{
-			decimalNum = Math.abs(decimalNum);
-			System.out.println("AbsVal Decimal Number is: "+decimalNum);
-			result = this.decimalToBinary();
-			System.out.println("AbsVal Decimal Number to Binary: "+result);
-			StringBuilder modifiedResult = new StringBuilder(result);
+		if(decimalNum<0) {
+			boolean foundMSB = false;
 			
-			//two's complement
-			for(int i = 0; i < result.length(); i++) {
-				if(result.charAt(i) == '0') {
-					modifiedResult.setCharAt(i, '1');
+			int bitPlace = 0;
+			int sizeOfArray = 0;
+			double MSBDecimalValue = 1;
+			
+			while(foundMSB == false) {
+				double currentMSB = Math.pow(2,  bitPlace);
+				if (currentMSB >= absval){
+					sizeOfArray=bitPlace+1;
+					
+					bitPlace -= 1;
+					foundMSB = true;
+					MSBDecimalValue = currentMSB;
 				}
-				else if(result.charAt(i) == '1') {
-					modifiedResult.setCharAt(i, '0');
-				}
-			}
-			result = modifiedResult.toString();
-			System.out.println("Make 1's 0's and 0's 1's: "+result);
-			
-			String signedBinary = "";
-			String carryOver = "0";
-			
-			//add 1 to the flipped string
-			String currNum = result.substring(result.length() -1);
-			int currNumInt = Integer.parseInt(currNum);
-			int sum = currNumInt + 1;
-			if(sum == 1) {
-				signedBinary += sum;
-			}
-			else if(sum == 2) {
-				signedBinary += '0';
-				carryOver = "1";
-			}
-			int carryOverInt = 0;
-			
-			//loop through the binary string summing it up 
-			for(int j = result.length() - 2; j > 0; j--) {
-				currNum = result.substring(j, j+1);
-				currNumInt = Integer.parseInt(currNum);
-				carryOverInt = Integer.parseInt(carryOver);
-				sum = currNumInt + carryOverInt;
-				if(sum == 1) {
-					signedBinary += sum;
-					carryOver = "0";
-				}
-				else if(sum == 2) {
-					signedBinary += '0';
-					carryOver = "1";
+				else {
+					bitPlace += 1;
 				}
 			}
 			
-			//reverse the string as it was built in reverse order
-			signedBinary = reverseString(signedBinary);
+			char[] bitRepresentation = new char[sizeOfArray];
+			bitRepresentation[sizeOfArray-1] = '1';
+			double remainingDecimal = MSBDecimalValue - absval;
 			
-			//if decimalNum was initially negative, set it back to negative
-			decimalNum = decimalNum*-1;
+			while(bitPlace >= 0) {
+				double tempNextBit_decimalValue = Math.pow(2,  bitPlace);
+				if (tempNextBit_decimalValue <= remainingDecimal) {
+					bitRepresentation[bitPlace] = '1';
+					remainingDecimal = remainingDecimal-tempNextBit_decimalValue;
+				}
+				else {
+					bitRepresentation[bitPlace] = '0';
+				}
+				bitPlace -= 1;
+			}
 			
-			return signedBinary;
+			return reverseString(String.valueOf(bitRepresentation));
+		}
+		else {
+			return ("0" + this.decimalToBinary());
 		}
 	}
 	

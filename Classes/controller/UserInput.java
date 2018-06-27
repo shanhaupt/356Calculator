@@ -55,6 +55,13 @@ public class UserInput {
 		inputsToBinary(2);
 	}
 	
+	/*TODO
+	 * For each inputDataSize case, we need to add the following checks:
+	 * 		Prior to converting the decimal to binary (signed AND unsigned), that the number 
+	 * 			Inputed can actually be represented with the number of bits specified
+	 * 
+	 * 		Throw an exception for padBinaryString_to_dataType()
+	 */
 	public void inputsToBinary(int numInputs) {
 		for(int i=0; i<numInputs; i++) {
 			String tempUserInput = inputData[i].getUserInput();
@@ -72,14 +79,14 @@ public class UserInput {
 					int decimalInput = Integer.parseInt(tempUserInput);
 					Decimal myDecimal = new Decimal(decimalInput);
 					
-					tempUserInput = padBinaryString_to_dataType(tempUserInput, inputDataSize);
+					
 					if(signed) {
 						tempUserInput = myDecimal.signedDecimalToBinary();
 					}
 					else {
 						tempUserInput = myDecimal.decimalToBinary();
 					}
-					
+					tempUserInput = padBinaryString_to_dataType(tempUserInput, inputDataSize);
 					inputData[i].setInputAsBinary(tempUserInput);
 					
 				}
