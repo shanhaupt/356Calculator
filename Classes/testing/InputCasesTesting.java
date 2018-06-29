@@ -1,6 +1,6 @@
 package testing;
 
-import controller.DataRepresentationInputCases;
+import model.DataRepresentationInputCases;
 
 public class InputCasesTesting {
 	public static void main(String [] args) {

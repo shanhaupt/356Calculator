@@ -1,4 +1,6 @@
-package controller;
+package model;
+
+import exceptions.AlreadySetUserInputAsBinary;
 
 public class UserInput_Data {
 	private String input;
@@ -8,7 +10,8 @@ public class UserInput_Data {
 	private boolean signed;
 	
 	private String inputAsBinary;
-	
+	private boolean inputAsBinarySet = false;
+			
 	public UserInput_Data(String input, String inputRepresentation, boolean signed) {
 		this.input = input;
 		this.inputRepresentation = inputRepresentation;
@@ -33,8 +36,14 @@ public class UserInput_Data {
 		return signed;
 	}
 	
-	public void setInputAsBinary(String inputAsBinary) {
-		this.inputAsBinary = inputAsBinary;
+	public void setInputAsBinary(String inputAsBinary) throws AlreadySetUserInputAsBinary {
+		if (!inputAsBinarySet) {
+			this.inputAsBinary = inputAsBinary;
+			inputAsBinarySet = true;
+		}
+		else {
+			throw new AlreadySetUserInputAsBinary("This UserInput_Data object has already had its inputAsBinary variable set once!");
+		}
 	}
 	
 	public String getInputAsBinary() {

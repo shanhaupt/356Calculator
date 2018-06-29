@@ -1,8 +1,10 @@
 package testing;
 
-import controller.UserInput;
 import conversions.Binary;
+import exceptions.AlreadySetUserInputAsBinary;
 import exceptions.InvalidBinaryException;
+import exceptions.UnsupportedDataTypeExcaption;
+import model.UserInput;
 
 public class UserInputTesting {
 	public static void main(String [] args) {
@@ -13,15 +15,21 @@ public class UserInputTesting {
 		int inputString1_dataType = 8;
 		boolean inputString1_signed = true;
 		
-		UserInput myUserInput1 = new UserInput(inputString1, inputString1_representation,
-				inputString1_dataType, inputString1_signed);
+		UserInput myUserInput1 = null;
+		try {
+			myUserInput1 = new UserInput(inputString1, inputString1_representation,
+					inputString1_dataType, inputString1_signed);
+		} catch (AlreadySetUserInputAsBinary | UnsupportedDataTypeExcaption e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		System.out.println("Original Input: " + myUserInput1.getUserInput1());
-		System.out.println("  Padded Input: "+myUserInput1.input1_toPaddedBinary());
+		System.out.println("  Padded Input: "+myUserInput1.get_Input1_toPaddedBinary());
 		
 		
 		Binary inputString1_original = new Binary(myUserInput1.getUserInput1());
-		Binary inputString1_padding = new Binary(myUserInput1.input1_toPaddedBinary());
+		Binary inputString1_padding = new Binary(myUserInput1.get_Input1_toPaddedBinary());
 		try {
 			if (inputString1_signed == true) {
 				System.out.println("Original as Decimal (Signed): "+inputString1_original.signedBinaryToDecimal());
@@ -42,11 +50,19 @@ public class UserInputTesting {
 		int inputString2_dataType = 8;
 		boolean inputString2_signed = true;
 		
-		UserInput myUserInput2 = new UserInput(inputString2, inputString2_representation,
-				inputString2_dataType, inputString2_signed);
+		UserInput myUserInput2 = null;
+		try {
+			myUserInput2 = new UserInput(inputString2, inputString2_representation,
+					inputString2_dataType, inputString2_signed);
+		} catch (AlreadySetUserInputAsBinary | UnsupportedDataTypeExcaption e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		System.out.println("Original Input: " + myUserInput2.getUserInput1());
-		System.out.println("  Padded Input: "+myUserInput2.input1_toPaddedBinary());
+		System.out.println("  Padded Input: "+myUserInput2.get_Input1_toPaddedBinary());
+		
+		
 		
 		
 		

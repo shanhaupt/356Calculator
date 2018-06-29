@@ -1,4 +1,4 @@
-package controller;
+package model;
 
 import conversions.Binary;
 import conversions.Decimal;
