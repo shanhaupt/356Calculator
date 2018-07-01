@@ -3,7 +3,7 @@ package testing;
 import conversions.Binary;
 import exceptions.AlreadySetUserInputAsBinary;
 import exceptions.InvalidBinaryException;
-import exceptions.UnsupportedDataTypeExcaption;
+import exceptions.UnsupportedDataTypeException;
 import model.UserInput;
 
 public class UserInputTesting {
@@ -19,7 +19,7 @@ public class UserInputTesting {
 		try {
 			myUserInput1 = new UserInput(inputString1, inputString1_representation,
 					inputString1_dataType, inputString1_signed);
-		} catch (AlreadySetUserInputAsBinary | UnsupportedDataTypeExcaption e) {
+		} catch (AlreadySetUserInputAsBinary | UnsupportedDataTypeException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -54,7 +54,7 @@ public class UserInputTesting {
 		try {
 			myUserInput2 = new UserInput(inputString2, inputString2_representation,
 					inputString2_dataType, inputString2_signed);
-		} catch (AlreadySetUserInputAsBinary | UnsupportedDataTypeExcaption e) {
+		} catch (AlreadySetUserInputAsBinary | UnsupportedDataTypeException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

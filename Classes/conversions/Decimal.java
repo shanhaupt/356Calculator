@@ -61,16 +61,20 @@ public class Decimal {
 	public String decimalToBinary() {
 		String binaryStr = "";
 		long tempVal = decimalNum;
+		//if the decimal value is 0, return the binary string "0"
+		if (tempVal == 0) {
+			binaryStr = "0";
+			return binaryStr;
+		}
 		/*divide the decimal value by 2, append the remainder to the binary string
 		as long as the decimal value is greater than 0 */
+		
 		while(tempVal > 0) {
 			long remainder = tempVal - ((tempVal/2)*2);
 			binaryStr += remainder;
 			tempVal = tempVal/2;
 		}
-
 		binaryStr = reverseString(binaryStr);
-		
 		return binaryStr;
 	}
 	

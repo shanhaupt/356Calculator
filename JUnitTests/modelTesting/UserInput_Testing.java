@@ -4,7 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import exceptions.AlreadySetUserInputAsBinary;
-import exceptions.UnsupportedDataTypeExcaption;
+import exceptions.UnsupportedDataTypeException;
 import org.junit.Assert;
 import model.UserInput;
 import model.UserInput_Data;
@@ -26,23 +26,54 @@ public class UserInput_Testing {
 // Both Throw: AlreadySetUserInputAsBinary, UnsupportedDataTypeExcaption 
 	
 	@Test
-	public void unsignedHexToDecimalTesting_1() {
+	public void unsignedChar_HexToBinary_Testing1() {
 		String userInput1 = "a";
 		String userInput1_representation = "hex";
 		int inputDataType = 8;
 		boolean signed = false;
 		
-		UserInput tester1 = null;
+		String result = unsignedChar_HexToDecimal_Testing1_MASTER(userInput1, userInput1_representation, inputDataType, signed);
 		
+		String result_expected = "00001010";
+		Assert.assertEquals(result_expected, result);
+	}
+	
+	@Test
+	public void unsignedChar_HexToBinary_Testing2() {
+		String userInput1 = "ff";
+		String userInput1_representation = "hex";
+		int inputDataType = 8;
+		boolean signed = false;
+		
+		String result = unsignedChar_HexToDecimal_Testing1_MASTER(userInput1, userInput1_representation, inputDataType, signed);
+		
+		String result_expected = "11111111";
+		Assert.assertEquals(result_expected, result);
+	}
+	
+	@Test
+	public void unsignedChar_HexToBinary_Testing3() {
+		String userInput1 = "00";
+		String userInput1_representation = "hex";
+		int inputDataType = 8;
+		boolean signed = false;
+		
+		String result = unsignedChar_HexToDecimal_Testing1_MASTER(userInput1, userInput1_representation, inputDataType, signed);
+		
+		String result_expected = "00000000";
+		Assert.assertEquals(result_expected, result);
+	}
+	
+	
+	public String unsignedChar_HexToDecimal_Testing1_MASTER(String userInput, String inputRepresentation,
+															int inputDataType, boolean signed) {
+		UserInput tester1 = null;
 		try {
-			tester1 = new UserInput(userInput1, userInput1_representation, inputDataType, signed);
-		} catch(AlreadySetUserInputAsBinary | UnsupportedDataTypeExcaption e){
+			tester1 = new UserInput(userInput, inputRepresentation, inputDataType, signed);
+		} catch(AlreadySetUserInputAsBinary | UnsupportedDataTypeException e){
 			e.printStackTrace();
 		}
-		
-		String result = "00001010";
-		Assert.assertEquals(result, tester1.get_Input1_toPaddedBinary());
-		
+		return tester1.get_Input1_toPaddedBinary();
 	}
 	
 }

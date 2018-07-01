@@ -8,7 +8,7 @@ import conversions.Decimal;
 import conversions.Hex;
 import exceptions.AlreadySetUserInputAsBinary;
 import exceptions.InvalidHexException;
-import exceptions.UnsupportedDataTypeExcaption;
+import exceptions.UnsupportedDataTypeException;
 
 public class UserInput {
 	
@@ -42,7 +42,7 @@ public class UserInput {
 		 */
 	
 	//Constructor for one input
-	public UserInput(String userInput1, String userInput1_representation, int inputDataType, boolean signed) throws AlreadySetUserInputAsBinary, UnsupportedDataTypeExcaption {
+	public UserInput(String userInput1, String userInput1_representation, int inputDataType, boolean signed) throws AlreadySetUserInputAsBinary, UnsupportedDataTypeException {
 		inputData[0] = new UserInput_Data(userInput1, userInput1_representation, signed);
 		this.signed = signed;
 		this.inputDataSize = inputDataType;
@@ -52,7 +52,7 @@ public class UserInput {
 	//Constructor for two inputs
 	public UserInput(String userInput1, String userInput1_representation, 
 									String userInput2, String userInput2_representation, 
-									int inputDataType, boolean signed) throws AlreadySetUserInputAsBinary, UnsupportedDataTypeExcaption {
+									int inputDataType, boolean signed) throws AlreadySetUserInputAsBinary, UnsupportedDataTypeException {
 		
 		inputData[0] = new UserInput_Data(userInput1, userInput1_representation, signed);
 		inputData[1] = new UserInput_Data(userInput2, userInput2_representation, signed);
@@ -68,7 +68,7 @@ public class UserInput {
 	 * 
 	 * 		Throw an exception for padBinaryString_to_dataType()
 	 */
-	public void inputsToBinary(int numInputs) throws AlreadySetUserInputAsBinary, UnsupportedDataTypeExcaption {
+	public void inputsToBinary(int numInputs) throws AlreadySetUserInputAsBinary, UnsupportedDataTypeException {
 		inputDataSizeChecker(inputDataSize);
 		for(int i=0; i<numInputs; i++) {
 			String tempUserInput = inputData[i].getUserInput();
@@ -114,7 +114,7 @@ public class UserInput {
 		}
 	}
 	
-	public String padBinaryString_to_dataType(String input, int dataType) throws UnsupportedDataTypeExcaption {
+	public String padBinaryString_to_dataType(String input, int dataType) throws UnsupportedDataTypeException {
 		inputDataSizeChecker(dataType);
 		if((input.length()<dataType+1)&&(input.length()>0)){
 			char[] zeroMask = new char[dataType];
@@ -169,7 +169,7 @@ public class UserInput {
 	 * 		Case 80     Long Double (10 Bytes, 80 Bits)
 	 */
 	//Checks to see if data type is supported by the program
-	public void inputDataSizeChecker(int inputDataSize) throws UnsupportedDataTypeExcaption {
+	public void inputDataSizeChecker(int inputDataSize) throws UnsupportedDataTypeException {
 		HashMap<Integer, String> supportedDataTypes = new HashMap<>();
 		supportedDataTypes.put(8, "char");
 		supportedDataTypes.put(16, "short");
@@ -177,7 +177,7 @@ public class UserInput {
 		supportedDataTypes.put(64, "double");
 		supportedDataTypes.put(80, "longdouble");
 		if (!(supportedDataTypes.containsKey(inputDataSize))) {
-			throw new UnsupportedDataTypeExcaption("Sorry, we do not support any data type of "+inputDataSize+" bits.");
+			throw new UnsupportedDataTypeException("Sorry, we do not support any data type of "+inputDataSize+" bits.");
 		}
 	}
 	
